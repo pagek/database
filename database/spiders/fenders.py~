@@ -1,25 +1,44 @@
-import scrapy
-from scrapy.contrib.spiders import CrawlSpider, Rule
-from scrapy.contrib.linkextractors.lxmlhtml.LxmlLinkExtractor import LxmlLinkExtractor
+import re
+import json
+from urlparse import urlparse
 
-class MySpider(CrawlSpider):
-    name = 'usedprice.com'
+
+from scrapy.selector import Selector
+try:
+    from scrapy.spider import Spider
+except:
+    from scrapy.spider import BaseSpider as Spider
+from scrapy.utils.response import get_base_url
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.contrib.linkextractors import LinkExtractor
+
+
+from .log import *
+
+class CommonSpider(CrawlSpider):
+    name = 'fender'
     allowed_domains = ['usedprice.com']
     start_urls = ['http://www.usedprice.com/items/guitars-musical-instruments/fender/?ob=model_asc#results']
 
     rules = (
-        # Extract links matching 'category.php' (but not matching 'subsection.php')
-        # and follow links from them (since no callback means follow=True by default).
-        Rule(LxmlLinkExtractor(allow=('items/guitars-musical-instruments/fender/electric-guitar/?ob=model_asc&pn=', )), callback='parse_item'),
+ 
+        Rule(LinkExtractor(allow=( )), callback='parse_item'),
 
-        # Extract links matching 'item.php' and parse them with the spider's method parse_item
-       # Rule(LinkExtractor(allow=('item\.php', )), callback='parse_item'),
-    )
 
     def parse_item(self, response):
-        self.log('Hi, this is an item page! %s' % response.url)
-        item = scrapy.Item()
-       # item['id'] = response.xpath('//td[@class="itemResult"]/text()').re(r'ID: (\d+)')
-        item['name'] = response.xpath('//td[@class="itemResult"]/text()').extract()
-      #  item['description'] = response.xpath('//td[@id="item_description"]/text()').extract()
-        return item
+        hxs = HtmlXPathSelector(response)
+        item = []
+        data = hxs.select('//td[@class="itemResult"]')
+        tmpNextPage = hxs.select('//div[@class="baseText blue"]/span[@id="pnLink"]/a/@href').extract()
+        for attr in data:
+		item = RowItem()
+		instrInfo = attr.select('//tr[@class="oddItemColor baseText"]/span[@class="itemResult"]').extract()
+		item['attr'] = instrInfo
+		print "Instrument Info: ", instrInfo
+		yield item
+	
+	for NextPageLink in tmpNextPage
+		m = re.search("Location," NextPageLink
+		if m:
+			
+

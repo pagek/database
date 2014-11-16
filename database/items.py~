@@ -16,4 +16,3 @@ class DatabaseItem(scrapy.Item):
     attr = scrapy.Field()
     instrInfo = scrapy.Field()
     NextPageLink = scrapy.Field()
-    NextPage = scrapy.Field()
