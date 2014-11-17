@@ -8,7 +8,7 @@
 import scrapy
 
 
-class DatabaseItem(scrapy.Item):
+class databaseItem(scrapy.Item):
     # define the fields for your item here like:
     name = scrapy.Field()
     RowItem = scrapy.Field()
