@@ -12,6 +12,11 @@ BOT_NAME = 'database'
 
 SPIDER_MODULES = ['database.spiders']
 NEWSPIDER_MODULE = 'database.spiders'
-
+FEED_EXPORTERS_BASE = {
+    'xml': 'scrapy.contrib.exporter.XmlItemExporter',
+}
+ITEM_PIPELINES = {
+    'database.pipelines.XmlExportPipeline': 300,
+}
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'database (+http://www.yourdomain.com)'

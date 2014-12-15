@@ -12,8 +12,10 @@ class databaseItem(scrapy.Item):
     # define the fields for your item here like:
     name = scrapy.Field()
     RowItem = scrapy.Field()
-    data = scrapy.Field()
+    datao = scrapy.Field()
+    datae = scrapy.Field()
     attr = scrapy.Field()
     instrInfo = scrapy.Field()
     NextPageLink = scrapy.Field()
-    NextPage = scrapy.Field()
+    NextPage = scrapy.Field() 
+    modelInfo = scrapy.Field()

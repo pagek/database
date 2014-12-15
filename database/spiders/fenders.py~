@@ -28,17 +28,16 @@ class CommonSpider(CrawlSpider):
 
 
     def parse_item(self, response):
-      hxs = HtmlXPathSelector(response)
-      item = []
-      data = hxs.select('//tr[@class="oddItemColor baseText"]')
-      tmpNextPage = hxs.select('//div[@class="baseText blue"]/span[@id="pnLink"]/a/@href').extract()
-      for attr in data:
-				#item = RowItem()
-				instrInfo = attr.select('//tr[@class="oddItemColor baseText"]/span[@class="itemResult"]/text()').extract()
-				print "Instrument Info: ", instrInfo
-				yield instrInfo
-			
-				
+		hxs = HtmlXPathSelector(response)
+		item = []
+		data = hxs.select('//tr[@class="oddItemColor baseText"]')
+		tmpNextPage = hxs.select('//div[@class="baseText blue"]/span[@id="pnLink"]/a/@href').extract()
+		for attr in data:
+			item = RowItem()
+			RowItem = attr.select('//td[@class="itemResult"]/text()').extract()
+			print "Instrument Info: ", RowItem
+			yield RowItem
+
 
 			#for NextPageLink in tmpNextPage
 			#	m = re.search("Location," NextPageLink)
